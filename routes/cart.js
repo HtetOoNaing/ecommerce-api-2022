@@ -1,6 +1,7 @@
 const {
   verifyTokenAndAdmin,
   verifyToken,
+  verifyTokenAndAuthorization,
 } = require("../middlewares/verifyToken");
 const Cart = require("../models/Cart");
 
@@ -16,20 +17,20 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
-// router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
-//   try {
-//     const updatedProduct = await Product.findByIdAndUpdate(
-//       req.params.id,
-//       {
-//         $set: req.body,
-//       },
-//       { new: true }
-//     );
-//     res.status(200).json(updatedProduct);
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
+router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+  try {
+    const updatedCart = await Cart.findByIdAndUpdate(
+      req.params.id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedCart);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 // router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 //   try {
